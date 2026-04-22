@@ -6,56 +6,107 @@ export default function Welcome({
 }: {
     canRegister?: boolean;
 }) {
-    const { auth } = usePage().props;
+    const { auth } = usePage().props as any;
 
     return (
         <>
-            <Head title="Welcome">
-                <link rel="preconnect" href="https://fonts.bunny.net" />
-                <link
-                    href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600"
-                    rel="stylesheet"
-                />
-            </Head>
-            <div className="flex min-h-screen flex-col items-center bg-[#FDFDFC] p-6 text-[#1b1b18] lg:justify-center lg:p-8 dark:bg-[#0a0a0a]">
-                <header className="mb-6 w-full max-w-[335px] text-sm not-has-[nav]:hidden lg:max-w-4xl">
-                    <nav className="flex items-center justify-end gap-4">
-                        {auth.user ? (
-                            <Link
-                                href={dashboard()}
-                                className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
-                            >
-                                Dashboard
-                            </Link>
-                        ) : (
-                            <>
+            <Head title="Welcome" />
+
+            <div className="min-h-screen flex flex-col bg-background text-foreground">
+                {/* Navbar */}
+                <header className="w-full border-b">
+                    <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+                        <h1 className="text-lg font-semibold">
+                            BarberGo
+                        </h1>
+
+                        <nav className="flex items-center gap-3">
+                            {auth.user ? (
                                 <Link
-                                    href={login()}
-                                    className="inline-block rounded-sm border border-transparent px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#19140035] dark:text-[#EDEDEC] dark:hover:border-[#3E3E3A]"
+                                    href={dashboard()}
+                                    className="px-4 py-2 text-sm font-medium bg-primary text-white rounded-md hover:opacity-90"
                                 >
-                                    Log in
+                                    Dashboard
                                 </Link>
-                                {canRegister && (
+                            ) : (
+                                <>
                                     <Link
-                                        href={register()}
-                                        className="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b]"
+                                        href={login()}
+                                        className="text-sm text-muted-foreground hover:underline"
                                     >
-                                        Register
+                                        Log in
                                     </Link>
-                                )}
-                            </>
-                        )}
-                    </nav>
+                                </>
+                            )}
+                        </nav>
+                    </div>
                 </header>
-                <div className="flex w-full items-center justify-center opacity-100 transition-opacity duration-750 lg:grow starting:opacity-0">
-                    <main className="flex w-full max-w-[335px] flex-col-reverse lg:max-w-4xl lg:flex-row">
-                        <div className='flex flex-col'>
-                            <h1 className='text-white text-2xl font-bold'>BarberGo</h1>
-                            <p className='text-white'>Books your barber now!</p>
+
+                {/* Hero */}
+                <main className="flex-1 flex items-center justify-center px-6">
+                    <div className="max-w-4xl text-center space-y-6">
+                        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+                            Manage Your Barber Shop
+                            <br />
+                            <span className="text-primary">
+                                Easily & Efficiently
+                            </span>
+                        </h1>
+
+                        <p className="text-muted-foreground max-w-xl mx-auto">
+                            BarberGo helps you manage barbers, organize data,
+                            and build your own barber system with a modern
+                            dashboard.
+                        </p>
+
+                        {/* CTA */}
+                        <div className="flex justify-center gap-3 pt-2">
+                            <Link
+                                href={auth.user ? dashboard() : login()}
+                                className="px-5 py-2 bg-primary text-white rounded-md text-sm font-medium hover:opacity-90"
+                            >
+                                {auth.user
+                                    ? 'Go to Dashboard'
+                                    : 'Get Started'}
+                            </Link>
                         </div>
-                    </main>
-                </div>
-                <div className="hidden h-14.5 lg:block"></div>
+
+                        {/* Features */}
+                        <div className="grid md:grid-cols-3 gap-4 pt-10">
+                            <div className="border rounded-lg p-4">
+                                <h3 className="font-semibold">
+                                    Manage Barbers
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Add, edit, and manage barber data easily
+                                </p>
+                            </div>
+
+                            <div className="border rounded-lg p-4">
+                                <h3 className="font-semibold">
+                                    Fast & Simple
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Built with modern Laravel + React stack
+                                </p>
+                            </div>
+
+                            <div className="border rounded-lg p-4">
+                                <h3 className="font-semibold">
+                                    Scalable
+                                </h3>
+                                <p className="text-sm text-muted-foreground">
+                                    Ready for booking & advanced features
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+
+                {/* Footer */}
+                <footer className="text-center text-xs text-muted-foreground py-6">
+                    Built with Laravel + Inertia + React ⚡
+                </footer>
             </div>
         </>
     );
