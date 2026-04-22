@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cashflow;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -118,7 +119,7 @@ class MoneyController extends Controller
         }
     }
 
-    private function parseMonthOrNow(string $month): Carbon
+    private function parseMonthOrNow(string $month): CarbonInterface
     {
         if (preg_match('/^\d{4}-\d{2}$/', $month) !== 1) {
             return now();
@@ -131,4 +132,3 @@ class MoneyController extends Controller
         }
     }
 }
-

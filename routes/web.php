@@ -3,18 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 use App\Http\Controllers\BarberController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MoneyController;
-use App\Models\Barber;
 
 Route::inertia('/', 'welcome', [
     'canRegister' => Features::enabled(Features::registration()),
 ])->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::inertia('dashboard', 'dashboard', [
-        'totalBarbers' => Barber::count(),
-        'barbersCreatedToday' => Barber::whereDate('created_at', today())->count(),
-    ])->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
 
     Route::get('/money', [MoneyController::class, 'index'])->name('money.index');
     Route::post('/money', [MoneyController::class, 'store'])->name('money.store');
